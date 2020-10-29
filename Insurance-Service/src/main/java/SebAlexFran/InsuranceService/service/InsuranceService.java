@@ -16,17 +16,19 @@ public class InsuranceService {
     private InsuranceRepository insuranceRepository;
 
     public String postInsurrance(Insurance ins) throws InsuranceException {
-        if(ins.getId().isEmpty())
+        if (ins.getId().isEmpty())
             throw new InsuranceException("Insurance id is Empty");
-        if(ins.getId_facility().isEmpty())
+        if (ins.getId_facility().isEmpty())
             throw new InsuranceException("Facility id is Empty");
-        Optional<Insurance> opt = insuranceRepository.findById(ins.getId());
-
-        for(Modality modal : ins.getModalities()){
-            if(modal.getPercentage() <= 0.0)
-                throw new InsuranceException("Pourcentage nul");
+        if (!insuranceRepository.findById(ins.getId()).isPresent()) {
+            Optional<Insurance> opt = insuranceRepository.findById(ins.getId());
+            for (Modality modal : ins.getModalities()) {
+                if (modal.getPercentage() <= 0.0)
+                    throw new InsuranceException("Pourcentage nul");
+            }
+            return insuranceRepository.save(ins).toString();
         }
-        return insuranceRepository.save(ins).toString();
+        throw new InsuranceException("Insurance id deja existant");
     }
 
     public List<Insurance> getAll(){
@@ -35,7 +37,7 @@ public class InsuranceService {
 
     public String getInsurance(String ins) throws InsuranceException {
         Optional<Insurance> opt = insuranceRepository.findById(ins);
-        if(!opt.isPresent()) return "id non existant";
+        if(!opt.isPresent()) throw new InsuranceException("id non existant");
         return opt.get().toString();
     }
 

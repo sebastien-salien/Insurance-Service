@@ -6,7 +6,9 @@ import SebAlexFran.InsuranceService.model.Modality;
 import SebAlexFran.InsuranceService.repository.InsuranceRepository;
 import SebAlexFran.InsuranceService.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,8 @@ public class InsuranceRessource {
         try {
             return insuranceService.postInsurrance(insurance);
         } catch (InsuranceException exception) {
-            return "Exception leve " + exception.getMessage();
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, exception.getMessage(), exception);
         }
     }
 
@@ -31,7 +34,8 @@ public class InsuranceRessource {
         try {
             return this.insuranceService.getInsurance( id );
         } catch (InsuranceException exception) {
-            return "Exception leve " + exception.getMessage();
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, exception.getMessage(), exception);
         }
     }
 
@@ -45,7 +49,8 @@ public class InsuranceRessource {
         try {
             return this.insuranceService.putInsurance(ins, body);
         } catch (InsuranceException e) {
-            return "[Error] "+ e.getMessage();
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
 }
