@@ -22,4 +22,10 @@ public class Insurance {
     @OneToMany
     private List<Modality> modalities;
 
+    public String getId() {
+        return id;
+    }
+    public String getId_facility() {
+        return id_facility;
+    }
 }

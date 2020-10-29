@@ -15,5 +15,12 @@ public class Modality {
     @GeneratedValue
 
     private String name;
-    private String percentage;
+    private double percentage;
+
+    public String getName() {
+        return name;
+    }
+    public double getPercentage() {
+        return percentage;
+    }
 }
