@@ -27,12 +27,17 @@ public class InsuranceRessource {
     }
 
     @RequestMapping(path = "/insurance/{id}", method = RequestMethod.GET)
-    public String getInsurance(@PathVariable("id") Insurance id) {
+    public String getInsurance(@PathVariable("id") String id) {
         try {
             return this.insuranceService.getInsurance( id );
         } catch (InsuranceException exception) {
             return "Exception leve " + exception.getMessage();
         }
+    }
+
+    @RequestMapping(path ="/insurance", method = RequestMethod.GET)
+    public String getAllInsurance(){
+        return this.insuranceService.getAll().toString();
     }
 
     @RequestMapping( path = "/insurance/{id}", method = RequestMethod.PUT)
