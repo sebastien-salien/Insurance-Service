@@ -18,6 +18,15 @@ public class InsuranceRessource {
     @Autowired
     private InsuranceService insuranceService;
 
+    @RequestMapping(path = "/insurance" , method = RequestMethod.POST)
+    public String postInsurrance(@RequestBody Insurance insurance) {
+        try{
+            return insuranceService.postInsurrance(insurance);
+        } catch (InsurranceException exception){
+            return "Exception leve "+exception.getMessage();
+        }
+    }
+
     @RequestMapping( path="/insurance", method= RequestMethod.GET)
     public String getInsurance(){
         this.insuranceRepository.save(new Insurance("efyzici","fcckc", new ArrayList<Modality>()));
