@@ -1,10 +1,12 @@
 package SebAlexFran.InsuranceService.rest;
 
+import SebAlexFran.InsuranceService.Exception.InsuranceException;
 import SebAlexFran.InsuranceService.model.Insurance;
 import SebAlexFran.InsuranceService.model.Modality;
 import SebAlexFran.InsuranceService.repository.InsuranceRepository;
 import SebAlexFran.InsuranceService.service.InsuranceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +24,7 @@ public class InsuranceRessource {
     public String postInsurrance(@RequestBody Insurance insurance) {
         try{
             return insuranceService.postInsurrance(insurance);
-        } catch (InsurranceException exception){
+        } catch (InsuranceException exception){
             return "Exception leve "+exception.getMessage();
         }
     }

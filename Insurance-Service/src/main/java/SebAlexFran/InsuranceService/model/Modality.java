@@ -14,5 +14,9 @@ public class Modality {
     @Id
 
     private String name;
-    private String percentage;
+    private double percentage;
+
+    public double getPercentage() {
+        return percentage;
+    }
 }
