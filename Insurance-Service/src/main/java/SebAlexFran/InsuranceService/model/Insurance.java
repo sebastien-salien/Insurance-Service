@@ -3,23 +3,24 @@ package SebAlexFran.InsuranceService.model;
 import jdk.jfr.DataAmount;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.stream.Collectors;
 import SebAlexFran.InsuranceService.model.Modality;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+
 @Data
-
+@Document(collection = "insurance")
 public class Insurance {
     @Id
-    @GeneratedValue
     private String id;
     private String id_facility;
-    @OneToMany
     private List<Modality> modalities;
 
+    public Insurance(String id, String id_facility, List<Modality> modalities) {
+        this.id = id;
+        this.id_facility = id_facility;
+        this.modalities = modalities;
+    }
 }
