@@ -7,6 +7,8 @@ import SebAlexFran.InsuranceService.repository.InsuranceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class InsuranceService {
     @Autowired
@@ -22,5 +24,12 @@ public class InsuranceService {
                 throw new InsuranceException("Pourcentage nul");
         }
         return insuranceRepository.save(ins).toString();
+    }
+
+    public String getInsurance(Insurance ins) throws InsuranceException {
+        Optional<Insurance> opt = insuranceRepository.findById(ins.getId());
+        System.out.println(ins);
+        if(!opt.isPresent()) return "id non existant";
+        return opt.get().toString();
     }
 }
