@@ -34,5 +34,14 @@ public class InsuranceRessource {
             return "Exception leve " + exception.getMessage();
         }
     }
+
+    @RequestMapping( path = "/insurance/{id}", method = RequestMethod.PUT)
+    public String putInsurance(@PathVariable("id") String ins, @RequestBody Insurance body){
+        try {
+            return this.insuranceService.putInsurance(ins, body);
+        } catch (InsuranceException e) {
+            return "[Error] "+ e.getMessage();
+        }
+    }
 }
 

@@ -19,4 +19,11 @@ public class Modality {
     public double getPercentage() {
         return percentage;
     }
+
+    @Override
+    public boolean equals(Object other){
+        if(((Modality) other).getName() == name)
+            return true;
+        return false;
+    }
 }

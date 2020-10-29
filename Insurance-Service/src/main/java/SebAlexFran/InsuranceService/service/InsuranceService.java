@@ -32,4 +32,11 @@ public class InsuranceService {
         if(!opt.isPresent()) return "id non existant";
         return opt.get().toString();
     }
+
+    public String putInsurance(String id, Insurance body) throws InsuranceException {
+        Optional<Insurance> opt = insuranceRepository.findById(id);
+        if(opt.isEmpty())
+            throw new InsuranceException("Insurance null");
+        return opt.get().toString();
+    }
 }

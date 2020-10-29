@@ -23,4 +23,12 @@ public class Insurance {
         this.id_facility = id_facility;
         this.modalities = modalities;
     }
+
+    public int contain(Modality cmp){
+        for(Modality modality : modalities){
+            if(modality.getName().equals(cmp.getName()))
+                return modalities.indexOf(modality);
+        }
+        return -1;
+    }
 }
