@@ -12,7 +12,6 @@ import javax.persistence.GeneratedValue;
 @Getter
 public class Modality {
     @Id
-
     private String name;
     private double percentage;
 

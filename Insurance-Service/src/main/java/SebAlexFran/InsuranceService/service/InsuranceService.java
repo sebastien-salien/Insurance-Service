@@ -1,5 +1,6 @@
 package SebAlexFran.InsuranceService.service;
 
+import SebAlexFran.InsuranceService.Dto.InsuranceDto;
 import SebAlexFran.InsuranceService.Exception.InsuranceException;
 import SebAlexFran.InsuranceService.model.Insurance;
 import SebAlexFran.InsuranceService.model.Modality;
@@ -9,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InsuranceService {
     @Autowired
     private InsuranceRepository insuranceRepository;
 
-    public String postInsurrance(Insurance ins) throws InsuranceException {
+    public List<InsuranceDto> postInsurrance(Insurance ins) throws InsuranceException {
         if (ins.getId().isEmpty())
             throw new InsuranceException("Insurance id is Empty");
         if (ins.getId_facility().isEmpty())
@@ -26,22 +28,25 @@ public class InsuranceService {
                 if (modal.getPercentage() <= 0.0)
                     throw new InsuranceException("Pourcentage nul");
             }
-            return insuranceRepository.save(ins).toString();
+            return insuranceRepository.save(ins).toInsuranceDTO();
         }
         throw new InsuranceException("Insurance id deja existant");
     }
 
-    public List<Insurance> getAll(){
-        return insuranceRepository.findAll();
+    public List<List<InsuranceDto>> getAll(){
+        return insuranceRepository.findAll()
+                .stream()
+                .map( val -> val.toInsuranceDTO())
+                .collect(Collectors.toList());
     }
 
-    public String getInsurance(String ins) throws InsuranceException {
+    public List<InsuranceDto> getInsurance(String ins) throws InsuranceException {
         Optional<Insurance> opt = insuranceRepository.findById(ins);
         if(!opt.isPresent()) throw new InsuranceException("id non existant");
-        return opt.get().toString();
+        return opt.get().toInsuranceDTO();
     }
 
-    public String putInsurance(String id, Insurance body) throws InsuranceException {
+    public List<InsuranceDto> putInsurance(String id, Insurance body) throws InsuranceException {
         if(id=="")
             throw new InsuranceException("Insurance id null");
         if(body==null)
@@ -72,6 +77,6 @@ public class InsuranceService {
                         throw new InsuranceException("assurance deja existant");
                 }}
         Insurance newIns = new Insurance(id, newFid, opt.get().getModalities());
-        return insuranceRepository.save(newIns).toString();
+        return insuranceRepository.save(newIns).toInsuranceDTO();
     }
 }

@@ -1,8 +1,10 @@
 package SebAlexFran.InsuranceService.model;
 
+import SebAlexFran.InsuranceService.Dto.InsuranceDto;
 import jdk.jfr.DataAmount;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import SebAlexFran.InsuranceService.model.Modality;
@@ -30,5 +32,16 @@ public class Insurance {
                 return modalities.indexOf(modality);
         }
         return -1;
+    }
+
+    public List<InsuranceDto> toInsuranceDTO() {
+        return modalities.stream()
+                .map(val -> InsuranceDto
+                        .builder()
+                        .id_facilite(id_facility)
+                        .name(val.getName())
+                        .percentage(val.getPercentage())
+                .build())
+                .collect(Collectors.toList());
     }
 }
