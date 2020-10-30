@@ -23,4 +23,10 @@ public class Modality {
             return true;
         return false;
     }
+
+    public String getName(){
+        return name;
+    }
+
+
 }
