@@ -1,8 +1,9 @@
 package SebAlexFran.InsuranceService.rest;
 
-import SebAlexFran.InsuranceService.Dto.InsuranceDto;
+
 import SebAlexFran.InsuranceService.Exception.InsuranceException;
-import SebAlexFran.InsuranceService.model.Insurance;
+import SebAlexFran.InsuranceService.model.DealInsurance;
+
 import SebAlexFran.InsuranceService.model.Modality;
 import SebAlexFran.InsuranceService.repository.InsuranceRepository;
 import SebAlexFran.InsuranceService.service.InsuranceService;
@@ -22,7 +23,7 @@ public class InsuranceRessource {
     private InsuranceService insuranceService;
 
     @RequestMapping(path = "/insurance", method = RequestMethod.POST)
-    public List<InsuranceDto> postInsurrance(@RequestBody Insurance insurance) {
+    public DealInsurance postInsurrance(@RequestBody DealInsurance insurance) {
         try {
             return insuranceService.postInsurrance(insurance);
         } catch (InsuranceException exception) {
@@ -31,10 +32,10 @@ public class InsuranceRessource {
         }
     }
 
-    @RequestMapping(path = "/insurance/{id}", method = RequestMethod.GET)
-    public List<InsuranceDto> getInsurance(@PathVariable("id") String id) {
+    @RequestMapping(path = "/insurance/{dealCode}", method = RequestMethod.GET)
+    public DealInsurance getInsurance(@PathVariable("dealCode") String dealCode) {
         try {
-            return this.insuranceService.getInsurance( id );
+            return this.insuranceService.getInsurance( dealCode );
         } catch (InsuranceException exception) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, exception.getMessage(), exception);
@@ -42,15 +43,25 @@ public class InsuranceRessource {
     }
 
     @RequestMapping(path ="/insurance", method = RequestMethod.GET)
-    public List<List<InsuranceDto>> getAllInsurance(){
+    public List<DealInsurance> getAllInsurance(){
         return this.insuranceService.getAll();
     }
 
-    @RequestMapping( path = "/insurance/{id}", method = RequestMethod.PUT)
-    public List<InsuranceDto> putInsurance(@PathVariable("id") String ins, @RequestBody Insurance body){
+    @RequestMapping( path = "/insurance/{dealCode}/{idFacility}", method = RequestMethod.PUT)
+    public DealInsurance putInsurance(@PathVariable("dealCode") String dealCode, @PathVariable("idFacility") String idFacility,@RequestBody List<Modality> modalities){
         try {
-            return this.insuranceService.putInsurance(ins, body);
+            return this.insuranceService.putInsurance(dealCode, idFacility, modalities);
         } catch (InsuranceException e) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+    }
+
+    @RequestMapping(path = "/insurance/{dealCode}", method = RequestMethod.DELETE)
+    public void deleteInsurance(@PathVariable("dealCode") String dealCode){
+        try{
+            this.insuranceService.deleteInsurance(dealCode);
+        }catch (InsuranceException e){
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }

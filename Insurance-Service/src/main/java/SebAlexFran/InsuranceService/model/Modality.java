@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 
 @Builder
 @Getter
