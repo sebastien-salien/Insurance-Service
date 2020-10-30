@@ -1,13 +1,10 @@
 package SebAlexFran.InsuranceService.model;
 
 import SebAlexFran.InsuranceService.Dto.InsuranceDto;
-import jdk.jfr.DataAmount;
 import lombok.Data;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import SebAlexFran.InsuranceService.model.Modality;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -43,5 +40,17 @@ public class Insurance {
                         .percentage(val.getPercentage())
                 .build())
                 .collect(Collectors.toList());
+    }
+
+    public String getId_facility() {
+        return id_facility;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<Modality> getModalities() {
+        return modalities;
     }
 }

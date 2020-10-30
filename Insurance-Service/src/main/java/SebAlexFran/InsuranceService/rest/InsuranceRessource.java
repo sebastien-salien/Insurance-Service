@@ -32,12 +32,11 @@ public class InsuranceRessource {
     }
 
     @RequestMapping(path = "/insurance/{id}", method = RequestMethod.GET)
-    public List<InsuranceDto> getInsurance(@PathVariable("id") String id) {
+    public String getInsurance(@PathVariable("id") String id) {
         try {
-            return this.insuranceService.getInsurance( id );
+            return this.insuranceService.getInsurance( id ).toString();
         } catch (InsuranceException exception) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, exception.getMessage(), exception);
+            return exception.getMessage();
         }
     }
 

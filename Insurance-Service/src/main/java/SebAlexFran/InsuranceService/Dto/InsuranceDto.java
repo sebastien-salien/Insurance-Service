@@ -9,4 +9,16 @@ public class InsuranceDto {
     private String id_facilite;
     private String name;
     private double percentage;
+
+    public String getName() {
+        return name;
+    }
+
+    public double getPercentage() {
+        return percentage;
+    }
+
+    public String getId_facilite() {
+        return id_facilite;
+    }
 }

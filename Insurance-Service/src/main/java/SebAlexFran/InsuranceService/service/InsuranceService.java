@@ -41,9 +41,12 @@ public class InsuranceService {
     }
 
     public List<InsuranceDto> getInsurance(String ins) throws InsuranceException {
-        Optional<Insurance> opt = insuranceRepository.findById(ins);
-        if(!opt.isPresent()) throw new InsuranceException("id non existant");
-        return opt.get().toInsuranceDTO();
+        List<List<InsuranceDto>> opt = getAll()
+                .stream()
+                .filter( val -> (!val.isEmpty()) && (val.get(0).getId_facilite().equals(ins)))
+                .collect(Collectors.toList());
+        if(opt.isEmpty()) throw new InsuranceException("id non existant" + opt);
+        return opt.get(0);
     }
 
     public List<InsuranceDto> putInsurance(String id, Insurance body) throws InsuranceException {
@@ -52,7 +55,7 @@ public class InsuranceService {
         if(body==null)
             throw new InsuranceException("Insurance null");
         Optional<Insurance> opt = insuranceRepository.findById(id);
-        if(opt.isEmpty())
+        if(!opt.isPresent())
             throw new InsuranceException("Insurance null");
         String newFid;
         if(body.getId_facility()!=null)
