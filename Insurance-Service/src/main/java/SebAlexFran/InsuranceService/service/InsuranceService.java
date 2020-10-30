@@ -22,7 +22,7 @@ public class InsuranceService {
 
     public DealInsurance postInsurrance(DealInsurance dealInsurance) throws InsuranceException {
         if(dealInsurance==null) throw new InsuranceException("pas de deal");
-
+        if(getInsurance(dealInsurance.getDealCode())!= null) throw new InsuranceException("existe deja/deal code deja utilisé");
         return insuranceRepository.save(dealInsurance);
     }
 
